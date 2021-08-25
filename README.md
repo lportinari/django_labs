@@ -1,1 +1,1 @@
-"# django_labs" 
+# django_labs
