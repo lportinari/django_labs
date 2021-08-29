@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.fields import DecimalField
+from django.contrib.auth import get_user_model
 
 
 class Chassi(models.Model):
@@ -27,6 +28,7 @@ class Montadora(models.Model):
 class Carro(models.Model):
     chassi = models.OneToOneField(Chassi, models.CASCADE)
     montadora = models.ForeignKey(Montadora, on_delete=models.CASCADE)
+    motoristas = models.ManyToManyField(get_user_model())
     modelo = models.CharField('Modelo', max_length=30, help_text='Máximo 30 caracteres')
     preco = models.DecimalField('Preco', max_digits=8, decimal_places=2)
 
