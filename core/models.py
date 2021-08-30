@@ -25,9 +25,16 @@ class Montadora(models.Model):
         return self.nome
 
 
+def set_default_montadora():
+    '''
+    Se montadora "Padrão" não existir, criará um novo registro com nome "Padrão".
+    '''
+    return Montadora.objects.get_or_create(nome='Padrão')[0]  # (objeto, boolean)
+
+
 class Carro(models.Model):
     chassi = models.OneToOneField(Chassi, models.CASCADE)
-    montadora = models.ForeignKey(Montadora, on_delete=models.CASCADE)
+    montadora = models.ForeignKey(Montadora, on_delete=models.SET(set_default_montadora))
     motoristas = models.ManyToManyField(get_user_model())
     modelo = models.CharField('Modelo', max_length=30, help_text='Máximo 30 caracteres')
     preco = models.DecimalField('Preco', max_digits=8, decimal_places=2)
